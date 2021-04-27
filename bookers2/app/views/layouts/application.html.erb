@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bookers2</title>
+    <title>(作業中)Bookers2Ver2</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,54 @@
   </head>
 
   <body>
+     <header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <%= link_to "Bookers", root_path %>
+       <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+         <% if user_signed_in? %>
+        <li><i class="fas fa-home">
+         <%= link_to 'Home', user_path(current_user.id) %></i>
+         <i class="fas fa-users">
+         <%= link_to 'Users', users_path %></i>
+         <i class="fas fa-book-open">
+         <%= link_to 'Books', books_path %></i>
+         <i class="fas fa-sign-out-alt">
+         <%= link_to "logout", destroy_user_session_path, method: :delete %></i>
+        </li>
+         <% else %>
+        <li>
+            <li><i class="fas fa-home">
+         <%= link_to "Home", root_path %></i>
+         <i class="fas fa-link">
+         <%= link_to "About", home_about_path %></i>
+         <i class="fas fa-user-plus"></i>
+         <%= link_to "sign up", new_user_registration_path %></i>
+         <i class="fas fa-sign-in-alt">
+         <%= link_to "login", new_user_session_path %></i>
+        </li>
+         <% end %>
+        </ul>
+       </div>
+
+    </div>
+  </nav>
+</header>
+
+<main class="mb-auto">
     <%= yield %>
+</main>
+
+     <footer>
+  <div class="container mt-5">
+  	<div class="row">
+    	<div class="mx-auto">
+    		<p>CopyRight Infratop.inc</p>
+    	</div>
+    </div>
+  </div>
+</footer>
+
   </body>
 </html>
