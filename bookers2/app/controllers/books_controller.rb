@@ -22,6 +22,7 @@ class BooksController < ApplicationController
     @book = Book.new
     @books = Book.all
     @users = User.all
+
   end
 
   def edit
@@ -40,10 +41,16 @@ class BooksController < ApplicationController
   end
 
    def destroy
-    @book = Book.find(params[:id])
-    @book.destroy
+    book = Book.find(params[:id])
+    book.destroy
     redirect_to books_path
    end
+
+   def delete
+   flash[:notice] = "Signed out successfully."
+   end
+
+
 
   private
 

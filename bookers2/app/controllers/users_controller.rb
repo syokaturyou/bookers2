@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
   def create
-    @book = Book.new(book_params)
+    @newbook = Book.new(book_params)
     @book.user_id = current_user.id
-      if @book.save
+      if @newbook.save
       flash[:notice] = "You have created book successfully."
       redirect_to book_path(@book.id)
       else
@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    @user = current_user
     @newbook = Book.new
     @users = User.all
     @books = Book.all
@@ -39,7 +40,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
+  def delete
+   flash[:notice] = "Signed out successfully."
   end
 
    private
