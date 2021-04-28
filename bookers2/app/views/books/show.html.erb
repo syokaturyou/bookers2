@@ -15,32 +15,24 @@
 <div>
   <table class="table">
   <tbody><tr></tr>
-  <% if @user = current_user %>
+
   <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
   <th>name：<%= @user.name %></th>
   <th>introduction：<%= @user.introduction %></th>
-  <% end %>
+
   </tbody>
   </table>
 </div>
 
-
 <div class="row">
- <% if @user == current_user %>
-<%= link_to edit_user_path(current_user.id), method: :get do %>
+<%= link_to edit_user_path(@user.id), method: :get do %>
 <i class="fas fa-user-cog"></i>
-<% end %><% end %>
+<% end %>
 </div>
 
-<div class="row">
- <% if @user != current_user %>
-<%= link_to user_path(current_user.id), method: :get do %>
-<i class="fas fa-user-cog"></i>
-<% end %><% end %>
-</div>
 
 <h3>New book</h3>
- <%= form_with model: @book, local:true do |f| %>
+ <%= form_with model: @newbook, local:true do |f| %>
   <p>Title</p>
   <%= f.text_field :title %>
   <p>Opinion</p>
@@ -61,15 +53,18 @@
   <tr></tr>
   <tr>
 
-  <% @books.each do |book| %>
+  <th><%= link_to user_path(@book.user) , target: "_blank" do %>
+  　　　<%= attachment_image_tag(@book.user, :profile_image,  :fill, 60, 60, fallback: "no_image.jpg") %>
+  　 　<%= @book.user.name  %>
+　　　<% end %></th>
 
-  <th><%= link_to attachment_image_tag(book.user, :profile_image,  :fill, 60, 60, fallback: "no_image.jpg"), user_path(book.user) %></th>
-  <th><%= link_to book.title, book_path(book.id) %></th>
-  <th><%= book.body %></th>
-  <th><%= link_to 'Edit', edit_book_path(book.id) %></th>
-  <th><%= link_to "Destroy", book_path(book.id), method: :delete, "data-confirm" => "本当に消しますか?" %></th>
-  </th>
-</tr><% end %>
+  <th><%= link_to @book.title, book_path(@book.id) %></th>
+  <th><%= @book.body %></th>
+  <% if @user.id == current_user.id %>
+  <th><%= link_to 'Edit', edit_book_path(@book.id) %></th>
+  <th><%= link_to "Destroy", book_path(@book.id), method: :delete, "data-confirm" => "本当に消しますか?" %></th>
+  <% end %>
+</tr>
 
  <thead>
 </table>

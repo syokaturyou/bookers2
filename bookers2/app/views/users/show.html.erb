@@ -23,17 +23,9 @@
 </div>
 
 <div class="row">
- <% if @user == current_user %>
-<%= link_to edit_user_path(current_user.id), method: :get do %>
+<%= link_to edit_user_path(@user.id), method: :get do %>
 <i class="fas fa-user-cog"></i>
-<% end %><% end %>
-</div>
-
-<div class="row">
- <% if @user != current_user %>
-<%= link_to user_path(current_user.id), method: :get do %>
-<i class="fas fa-user-cog"></i>
-<% end %><% end %>
+<% end %>
 </div>
 
 <h3>New book</h3>
@@ -56,9 +48,9 @@
   <tr></tr>
   <tr>
 
+
   <% @books.each do |book| %>
     <th><%= link_to attachment_image_tag(@user, :profile_image,  :fill, 60, 60, fallback: "no_image.jpg"), user_path(book.user) %></th>
-
   <th><%= link_to book.title, book_path(book.id) %></th>
   <th><%= book.body %></th>
   </tr>

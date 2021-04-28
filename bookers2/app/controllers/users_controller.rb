@@ -23,11 +23,16 @@ class UsersController < ApplicationController
     @newbook = Book.new
     @users = User.all
     @user = User.find(params[:id])
-    @books = Book.all
+    @books = @user.books
+
   end
 
   def edit
     @user = User.find(params[:id])
+    if @user.id != current_user.id
+     redirect_to user_path(current_user.id)
+    end
+
   end
 
   def update
