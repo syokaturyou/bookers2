@@ -47,6 +47,9 @@
     <th><%= link_to attachment_image_tag(@user, :profile_image,  :fill, 60, 60, fallback: "no_image.jpg"), user_path(book.user) %></th>
     <th><%= link_to book.title, book_path(book.id) %></th>
     <th><%= book.body %></th>
+
+   <th><p><%= link_to "#{book.book_comments.count} コメント", book_path(book.id) %></p></th>
+
     </tr>
     <% end %>
    <thead>
