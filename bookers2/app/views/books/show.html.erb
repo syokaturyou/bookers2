@@ -79,9 +79,10 @@
            <%= book_comment.user.name %>
            <%= book_comment.comment %>
            <% if book_comment.user == current_user %>
+           <% if @user.id == current_user.id %>
            <div class="comment-delete">
             <%= link_to "削除", book_comment_path(book_comment), method: :delete, "data-confirm" => "本当に消しますか?" %>
-           </div>
+           </div><% end %>
             <% end %>
         <% end %>
            </div>
@@ -92,8 +93,6 @@
         <% end %></th>
         </div>
  </div>
-
-
 
  </div>
  </div>
