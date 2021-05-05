@@ -1,4 +1,11 @@
 class UsersController < ApplicationController
+  def top
+    @user = User.find(params[:id])
+  end
+
+  def about
+    @user = User.find(params[:id])
+  end
 
   def create
     @newbook = Book.new(book_params)
@@ -17,6 +24,7 @@ class UsersController < ApplicationController
     @newbook = Book.new
     @users = User.all
     @books = Book.all
+
   end
 
   def show
@@ -24,7 +32,6 @@ class UsersController < ApplicationController
     @users = User.all
     @user = User.find(params[:id])
     @books = @user.books
-
   end
 
   def edit
@@ -49,9 +56,10 @@ class UsersController < ApplicationController
    flash[:notice] = "Signed out successfully."
   end
 
-   private
+  private
 
   def user_params
     params.require(:user).permit(:profile_image, :name, :introduction)
   end
+
 end

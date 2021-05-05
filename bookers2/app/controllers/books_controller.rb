@@ -57,8 +57,6 @@ class BooksController < ApplicationController
    flash[:notice] = "Signed out successfully."
    end
 
-
-
   private
 
   def book_params

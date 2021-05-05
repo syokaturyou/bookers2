@@ -4,16 +4,18 @@
  <div class="col-md-3">
 
   <h1>User info</h1>
-
   <table class="table">
-  <tbody><tr></tr>
-  <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
-  <th>name：<%= @user.name %></th>
-  <th>introduction：<%= @user.introduction %></th>
+  <tbody>
+  <tr><th><%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %></th></tr>
+  <tr><th>name：<%= @user.name %></th></tr>
+  <tr><th>introduction：<%= @user.introduction %></th></tr>
+  <tr><th>follows<th><%= link_to "#{@user.follower.count}", top_path(@user) %></th></th></tr>
+  <tr><th>followers<th><%= link_to "#{@user.followed.count}", about_path(@user) %></th></th></tr>
+  <tr><th></th></tr>
   </tbody>
   </table>
 
-  <%= link_to edit_user_path(@user.id), method: :get do %>
+ <%= link_to edit_user_path(@user.id), class: 'btn btn-outline-secondary', method: :get do %>
   <i class="fas fa-user-cog"></i>
   <% end %>
 
@@ -23,7 +25,7 @@
   <%= f.text_field :title %>
   <p>Opinion</p>
   <%= f.text_area :body %>
-  <%= f.submit 'Create Book' %>
+  <%= f.submit 'Create Book', class: 'btn btn-success' %>
   <% end %>
   </div>
 
@@ -34,12 +36,26 @@
   <th>image: </th>
   <th>name: </th>
   <th></th>
-  <th colspan="3"></th>
+  <th></th>
+  <th></th>
+  <th></th>
+  <th colspan="6"></th>
   <tr></tr>
   <tr>
   <% @users.each do |user| %>
   <th><%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %></th>
   <th><%= user.name %></th>
+  <th><%= "フォロー数: #{user.follower.count}" %></th>
+  <th><%= "フォロワー数: #{user.followed.count}" %></th>
+  <th>
+   <p>
+      <% if current_user.following?(user) %>
+        <%= link_to 'フォロー外す', unfollow_path(user.id),  method: :POST %>
+      <% else %>
+        <%= link_to 'フォローする', follow_path(user.id),  method: :POST %>
+      <% end %>
+    </p>
+  </th>
   <th><%= link_to "Show", user_path(user.id) %></th>
   </tr>
   <% end %>

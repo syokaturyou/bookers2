@@ -10,18 +10,28 @@
     <% end %>
 
   <h1>User info</h1>
-
   <table class="table">
-  <tbody><tr></tr>
-  <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
-  <th>name：<%= @user.name %></th>
-  <th>introduction：<%= @user.introduction %></th>
+  <tbody>
+  <tr><th><%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %></th></tr>
+  <tr><th>name：<%= @user.name %></th></tr>
+  <tr><th>introduction：<%= @user.introduction %></th></tr>
+  <tr><th>follows<th><%= link_to "#{@user.follower.count}", top_path(@user) %></th></th></tr>
+  <tr><th>followers<th><%= link_to "#{@user.followed.count}", about_path(@user) %></th></th></tr>
   </tbody>
   </table>
 
-   <%= link_to edit_user_path(@user.id), method: :get do %>
-   <i class="fas fa-user-cog"></i>
-   <% end %>
+  <%= link_to edit_user_path(@user.id), class: 'btn btn-outline-secondary', method: :get do %>
+  <i class="fas fa-user-cog"></i>
+  <% end %>
+
+<% unless @user == current_user %>
+  <% if current_user.following?(@user) %>
+    <%= link_to 'フォロー外す', unfollow_path(@user.id), class:  'btn btn-primary btn-block', method: :POST %>
+  <% else %>
+    <%= link_to 'フォローする', follow_path(@user.id), class: 'btn btn-success', method: :POST %>
+  <% end %>
+<% end %>
+<p></p>
 
    <h3>New book</h3>
    <%= form_with model: @newbook, local:true do |f| %>
@@ -29,7 +39,7 @@
    <%= f.text_field :title %>
    <p>Opinion</p>
    <%= f.text_area :body %>
-   <%= f.submit 'Create Book' %>
+   <%= f.submit 'Create Book', class: 'btn btn-success' %>
    <% end %>
    </div>
 
@@ -47,9 +57,7 @@
     <th><%= link_to attachment_image_tag(@user, :profile_image,  :fill, 60, 60, fallback: "no_image.jpg"), user_path(book.user) %></th>
     <th><%= link_to book.title, book_path(book.id) %></th>
     <th><%= book.body %></th>
-
    <th><p><%= link_to "#{book.book_comments.count} コメント", book_path(book.id) %></p></th>
-
     </tr>
     <% end %>
    <thead>

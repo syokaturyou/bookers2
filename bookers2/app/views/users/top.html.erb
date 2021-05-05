@@ -1,0 +1,33 @@
+<main>
+<div class="container px-5 px-sm-0">
+
+ <h4>Follower Users</h4>
+
+ <div class="row">
+  <div class="col-md-8 offset-md-1">
+  <table class="table table-hover table-inverse">
+
+  <thead>
+  <th>image: </th>
+  <th>name: </th>
+  <th></th>
+  <th></th>
+  <th></th>
+  <th colspan="5"></th>
+  <tr></tr>
+  <% @user.following_user.where.not(id: current_user.id).each do |user| %>
+  <th><%= attachment_image_tag user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %></th>
+  <th><%= "name: #{user.name} " %> </th>
+  <th>フォロー数: <%= ": #{user.follower.count}" %></th>
+  <th>フォロワー数:  <%= ": #{user.followed.count}" %> </th>
+  <th><%= link_to "show", user_path(user) %></th>
+  </tr>
+  <% end %>
+
+  <thead>
+  </table>
+  </div>
+
+</div>
+</div>
+</main>

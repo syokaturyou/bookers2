@@ -8,20 +8,21 @@
        <%= flash[:notice] %>
      </p>
    <% end %>
-   <h1>User info</h1>
 
+  <h1>User info</h1>
   <table class="table">
-  <tbody><tr></tr>
-  <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
-  <th>name：<%= @user.name %></th>
-  <th>introduction：<%= @user.introduction %></th>
+  <tbody>
+  <tr><th><%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %></th></tr>
+  <tr><th>name：<%= @user.name %></th></tr>
+  <tr><th>introduction：<%= @user.introduction %></th></tr>
+  <tr><th>follows</th></tr>
+  <tr><th>followers</th></tr>
   </tbody>
   </table>
 
-
-<%= link_to edit_user_path(@user.id), method: :get do %>
-<i class="fas fa-user-cog"></i>
-<% end %>
+<%= link_to edit_user_path(@user.id), class: 'btn btn-outline-secondary', method: :get do %>
+  <i class="fas fa-user-cog"></i>
+  <% end %>
 
 <h3>New book</h3>
  <%= form_with model: @newbook, local:true do |f| %>
@@ -29,7 +30,7 @@
   <%= f.text_field :title %>
   <p>Opinion</p>
   <%= f.text_area :body %>
-  <%= f.submit 'Create Book' %>
+  <%= f.submit 'Create Book', class: 'btn btn-success' %>
 <% end %>
 </div>
 
