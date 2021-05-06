@@ -18,8 +18,8 @@
   <tr><th>name：<%= @user.name %></th></tr>
   <tr><th>introduction：<%= @user.introduction %></th></tr>
   <% end %>
-  <tr><th>follows</th></tr>
-  <tr><th>followers</th></tr>
+  <tr><th>follows<th><%= link_to "#{@user.follower.count}", top_path(@user) %></th></th></tr>
+  <tr><th>followers<th><%= link_to "#{@user.followed.count}", about_path(@user) %></th></th></tr>
   </tbody>
   </table>
 

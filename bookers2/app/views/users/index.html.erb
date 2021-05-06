@@ -11,7 +11,6 @@
   <tr><th>introduction：<%= @user.introduction %></th></tr>
   <tr><th>follows<th><%= link_to "#{@user.follower.count}", top_path(@user) %></th></th></tr>
   <tr><th>followers<th><%= link_to "#{@user.followed.count}", about_path(@user) %></th></th></tr>
-  <tr><th></th></tr>
   </tbody>
   </table>
 
@@ -48,11 +47,12 @@
   <th><%= "フォロー数: #{user.follower.count}" %></th>
   <th><%= "フォロワー数: #{user.followed.count}" %></th>
   <th>
-   <p>
+   <p><% unless user == current_user %>
       <% if current_user.following?(user) %>
         <%= link_to 'フォロー外す', unfollow_path(user.id),  method: :POST %>
       <% else %>
         <%= link_to 'フォローする', follow_path(user.id),  method: :POST %>
+      <% end %>
       <% end %>
     </p>
   </th>
