@@ -5,6 +5,10 @@ Rails.application.routes.draw do
    get 'user/:id/top' => 'users#top', as: 'top'
    get 'user/:id/about' => 'users#about', as: 'about'
 
+   get '/search', to: 'searchs#search'
+
+   get 'search/result' => 'searchs#result'
+
   resources :users, only: [:create, :index, :show, :destroy, :edit, :update, :delete]
 
   resources :books, only: [:create, :index, :show, :destroy, :edit, :update, :delete] do

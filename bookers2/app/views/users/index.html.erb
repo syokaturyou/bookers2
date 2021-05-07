@@ -42,7 +42,7 @@
   <tr></tr>
   <tr>
   <% @users.each do |user| %>
-  <th><%= attachment_image_tag @user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %></th>
+  <th><%= attachment_image_tag user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %></th>
   <th><%= user.name %></th>
   <th><%= "フォロー数: #{user.follower.count}" %></th>
   <th><%= "フォロワー数: #{user.followed.count}" %></th>
