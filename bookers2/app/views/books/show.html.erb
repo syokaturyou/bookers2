@@ -20,7 +20,7 @@
   </tbody>
   </table>
 
-<%= link_to edit_user_path(@user.id), class: 'btn btn-outline-secondary', method: :get do %>
+<%= link_to edit_user_path(@user.id), class: 'btn btn-outline-secondary btn-block', method: :get do %>
   <i class="fas fa-user-cog"></i>
   <% end %>
 
@@ -46,13 +46,16 @@
 <div class="col-md-8 offset-md-1">
  <h4>Book detail</h4>
  <table class="table table-hover table-inverse">
+
   <thead>
   <th> </th>
   <th> </th>
   <th> </th>
   <th> </th>
   <th> </th>
-  <th colspan="5"></th>
+  <th> </th>
+  <th> </th>
+  <th colspan="7"></th>
   <tr></tr>
   <tr>
   <th><%= link_to user_path(@book.user) , target: "_blank" do %>
@@ -61,47 +64,26 @@
 　　　<% end %></th>
   <th><%= link_to @book.title, book_path(@book.id) %></th>
   <th><%= @book.body %></th>
-  <% if @user.id == current_user.id %>
-  <th><%= link_to 'Edit', edit_book_path(@book.id) %></th>
-  <th><%= link_to "Destroy", book_path(@book.id), method: :delete, "data-confirm" => "本当に消しますか?" %></th>
-  <% end %>
+      <% if @user.id == current_user.id %>
+  <th><%= link_to 'Edit', edit_book_path(@book.id), class: 'btn btn-success' %></th>
+  <th><%= link_to "Destroy", book_path(@book.id), class: 'btn btn-danger', method: :delete, "data-confirm" => "本当に消しますか?" %></th>
+      <% end %>
 
-   <th><% if @book.favorited_by?(current_user) %>
-    <p><%= link_to book_favorites_path(@book.id), method: :delete do %>
-    <i class="fas fa-heart" style="color: red;"></i>
-        <%= @book.favorites.count %>
-       <% end %></p>
-      <% else %>
-       <p><%= link_to book_favorites_path(@book.id), method: :post do %>
-       <i class="fas fa-heart" style="color: royalblue;"></i>
-          <%= @book.favorites.count %>
-          <% end %></p>
-      <% end %></th>
+　<th>
+　    <div class="favorites-btn_<%= @book.id %>" >
+       <%= render 'favorites/favorites-btn', book: @book %>
+      </div>
+  </th>
 
+   <th>コメント件数：<%= @book.book_comments.count %></th>
   </tr>
   <thead>
  </table>
 
-  <div class="comments">
-      <th><p>コメント件数：<%= @book.book_comments.count %></p>
-        <% @book.book_comments.each do |book_comment| %>
-        <p><%= attachment_image_tag(@book.user, :profile_image,  :fill, 60, 60, fallback: "no_image.jpg") %></p>
-           <%= book_comment.user.name %>
-           <%= book_comment.comment %>
-           <% if book_comment.user == current_user %>
-           <% if @user.id == current_user.id %>
-           <div class="comment-delete">
-            <%= link_to "削除", book_comment_path(book_comment), method: :delete, "data-confirm" => "本当に消しますか?" %>
-           </div><% end %>
-            <% end %>
-        <% end %>
-           </div>
-        <div class="new-comment">
-        <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
-        <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに" %>
-        <%= f.submit "送信する" %>
-        <% end %></th>
-        </div>
+    <div class="comments-btn">
+    <%= render 'book_comments/comments-btn', book_comment: @book_comment, book: @book, user: @user %>
+    </div>
+
  </div>
 
  </div>
